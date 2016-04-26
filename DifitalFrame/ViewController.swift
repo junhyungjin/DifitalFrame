@@ -11,7 +11,9 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet var imgView:UIImageView!
-    
+    @IBOutlet var toggleBtn:UIButton!
+    @IBOutlet var speedSlider:UISlider!
+    @IBOutlet var speedLabel:UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +35,24 @@ class ViewController: UIViewController {
         imgView.animationImages = cuteImages
         imgView.animationDuration = 15.0
         imgView.startAnimating()
-        
+        toggleBtn.setTitle("Stop", forState: UIControlState.Normal)
+    }
+    
+    @IBAction func toggleAction(sender:AnyObject){
+        if imgView.isAnimating() {
+            imgView.stopAnimating()
+            toggleBtn.setTitle("Start", forState: UIControlState.Normal)
+        } else {
+            imgView.startAnimating()
+            toggleBtn.setTitle("Stop", forState: UIControlState.Normal)
+        }
+    }
+    
+    @IBAction func changeSpeedAction(sender:AnyObject){
+        imgView.animationDuration = Double(speedSlider.value)
+        imgView.startAnimating()
+        toggleBtn.setTitle("Stop", forState: UIControlState.Normal)
+        speedLabel.text = String(format: "%.2f", speedSlider.value)
     }
 
     override func didReceiveMemoryWarning() {
